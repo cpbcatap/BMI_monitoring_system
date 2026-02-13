@@ -1,0 +1,40 @@
+/* ================================
+   REGISTER FORM TITLE (NEW)
+   ================================ */
+
+.form-container {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  text-align: left; /* Aligns title to left */
+}
+
+.form-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+/* ================================
+   CANCEL LINK
+   ================================ */
+
+.cancel-link {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.cancel-link a {
+  font-size: 13px;
+  color: var(--subtitle-color);
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.cancel-link a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+

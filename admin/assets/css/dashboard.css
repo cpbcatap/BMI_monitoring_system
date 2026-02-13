@@ -1,0 +1,275 @@
+/* ================================
+   DASHBOARD LAYOUT
+   ================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background: var(--page-bg);
+}
+
+/* main page wrapper */
+.main {
+  /* width: min(1100px, calc(100% - 40px)); */
+  margin: 22px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* ================================
+   HEADER
+   ================================ */
+.header {
+  /* background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); */
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header-title {
+  font-size: var(--title-size);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1.1;
+}
+
+.header-subtitle {
+  font-size: var(--subtitle-size);
+  color: var(--subtitle-color);
+}
+
+/* ================================
+   PROFILE HEADER (reused header)
+   ================================ */
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+
+/* each row like: Username / Birthday / etc */
+.profile-data {
+  font-size: 13px;
+  color: var(--subtitle-color);
+  line-height: 1.35;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.02);
+  width: fit-content;
+}
+
+/* nicer spacing in the left column for profile rows */
+.header-left {
+  gap: 8px; /* overrides previous 4px */
+}
+
+/* make header feel like a profile panel */
+.header {
+  align-items: flex-start; /* so logout aligns to top */
+}
+
+/* keep logout aligned properly */
+.header-right {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* RESPONSIVE: make chips wrap nicely */
+@media (max-width: 520px) {
+  .profile-data {
+    width: 100%;
+    border-radius: var(--radius-sm);
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-right {
+    justify-content: flex-end;
+  }
+}
+
+/* logout button */
+.logout {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-color);
+
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.logout:hover {
+  background: var(--button-hover-bg);
+  color: var(--button-hover-text);
+  border-color: var(--button-hover-bg);
+}
+
+/* ================================
+   CARDS
+   ================================ */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+.card-content {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+
+  padding: var(--pad);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card-content:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.card-value {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--subtitle-color);
+  line-height: 1.25;
+}
+
+/* right side logo bubble */
+.card-right {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+}
+
+.card-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(128, 0, 0, 0.08);
+  color: var(--primary-color);
+  border: 1px solid rgba(128, 0, 0, 0.15);
+
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+  padding: 6px;
+}
+
+/* ================================
+   TABLE CONTAINER
+   ================================ */
+.table-container {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+
+  overflow: hidden; /* keeps header corners clean */
+}
+
+.table-header {
+  padding: 14px 18px;
+  font-weight: 800;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border);
+
+  /* subtle theme accent */
+  background: linear-gradient(
+    90deg,
+    rgba(128, 0, 0, 0.08),
+    rgba(128, 0, 0, 0.02)
+  );
+}
+
+.table-content {
+  padding: 18px;
+  min-height: 220px;
+
+  color: var(--subtitle-color);
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+@media (max-width: 900px) {
+  .cards-container {
+    grid-template-columns: 1fr;
+  }
+
+  .header-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .main {
+    width: calc(100% - 24px);
+    margin: 14px auto;
+  }
+
+  .header {
+    padding: 14px;
+  }
+
+  .logout {
+    padding: 9px 12px;
+  }
+
+  .card-logo {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+  }
+}

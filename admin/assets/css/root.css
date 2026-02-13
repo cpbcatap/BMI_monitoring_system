@@ -1,0 +1,29 @@
+/* ================================
+   ROOT VARIABLES (Reusable Theme)
+   ================================ */
+:root {
+  --primary-color: #800000;
+  --subtitle-color: #525252;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --button-hover-bg: #800000;
+  --button-hover-text: #ffffff;
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* dashboard extras */
+  --page-bg: #f6f6f7;
+  --card-bg: #ffffff;
+  --border: #e7e7ea;
+
+  --radius: 14px;
+  --radius-sm: 12px;
+
+  --shadow: 0 8px 24px rgba(0,0,0,0.08);
+  --shadow-sm: 0 6px 14px rgba(0,0,0,0.06);
+
+  --gap: 16px;
+  --pad: 18px;
+
+  --title-size: 26px;
+  --subtitle-size: 17px;
+}
