@@ -1,37 +1,23 @@
 <?php
-// require __DIR__ . '/../../includes/db.php';
-
-$host    = 'localhost';
-$db      = 'bmi_monitoring';
-$user    = 'root';
-$pass    = '';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-  PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-  PDO::ATTR_EMULATE_PREPARES   => false,
-];
-
-try {
-  $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (PDOException $e) {
-  http_response_code(500);
-  exit('Database connection failed.');
-}
+require __DIR__ . '/../../../includes/db.php';
 
 header('Content-Type: application/json; charset=UTF-8');
 
+// p stands for profile
+
 $sql = "
   SELECT
-    user_id AS UserID,
-    full_name AS FullName,
-    gender AS Gender,
-    birthday AS Birthday
-  FROM profile
-  ORDER BY user_id DESC
+    p.user_id AS UserID,
+    p.full_name AS FullName,
+    p.gender AS Gender,
+    p.birthday AS Birthday,
+    COUNT(r.id) AS RecordCount
+  FROM profile p
+  LEFT JOIN records r ON p.user_id = r.user_id
+  GROUP BY p.user_id
+  ORDER BY p.user_id DESC
 ";
+
 
 try {
   $stmt = $pdo->query($sql);

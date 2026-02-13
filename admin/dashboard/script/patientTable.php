@@ -13,10 +13,26 @@
           data: 'FullName'
         },
         {
+          data: 'Birthday'
+        },
+        {
           data: 'Gender'
         },
         {
-          data: 'Birthday'
+          data: 'RecordCount'
+        },
+        {
+          data: null,
+          render: function(data, type, row) {
+            return `
+              <button class="table-btn btn-view" data-id="${row.UserID}">
+                View
+              </button>
+              <button class="table-btn btn-delete" data-id="${row.UserID}">
+                Delete
+              </button>
+            `;
+          }
         }
       ],
 
@@ -53,5 +69,18 @@
 
     // On sidebar/layout changes (just in case)
     setTimeout(adjustTable, 200);
+
+    // ✅ Button View Click Event to View Details
+    $('#patientTable').on('click', '.btn-view', function() {
+      const userId = $(this).data('id');
+      alert("ViewUser ID: " + userId);
+    });
+
+    // ✅ Button Delete Click Event to Delete Patient
+    $('#patientTable').on('click', '.btn-delete', function() {
+      const userId = $(this).data('id');
+      alert("Delete User ID: " + userId);
+    });
+
   });
 </script>
