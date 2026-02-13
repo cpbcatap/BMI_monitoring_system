@@ -7,6 +7,7 @@
   <title>Document</title>
   <link rel="stylesheet" href="../assets/css/root.css">
   <link rel="stylesheet" href="../assets/css/dashboard.css">
+  <link rel="stylesheet" href="../../plugins/datatables/datatables.min.css">
 </head>
 
 <body>
@@ -28,11 +29,35 @@
 
     <!-- Structure for table -->
     <div class="table-container">
-      <div class="table-header">Table Title</div>
-      <div class="table-content"></div>
+      <div class="table-content">
+
+        <table id="recordTable" class="display nowrap" style="width:100%">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date & Time</th>
+              <th>Weight (Kg)</th>
+              <th>Height (cm)</th>
+              <th>BMI</th>
+              <th>classification</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Insert Data Dynamically -->
+          </tbody>
+        </table>
+
+      </div>
     </div>
 
   </div>
+
+
+  <script src="../../plugins/js/jquery.min.js"></script>
+  <script src="../../plugins/datatables/datatables.min.js"></script>
+
+  <?php include 'script/recordTable.php'; ?>
 
 </body>
 
