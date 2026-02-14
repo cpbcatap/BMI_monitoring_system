@@ -1,0 +1,186 @@
+
+
+/* ================================
+   GLOBAL
+   ================================ */
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background: var(--page-bg);
+  color: var(--text-color);
+
+  min-height: 100vh;          /* full screen height */
+  display: flex;
+  justify-content: center;    /* horizontal center */
+  align-items: center;        /* vertical center */
+}
+
+.container {
+  display: flex;
+  gap: var(--gap);
+  padding: 40px;
+
+  width: 100%;
+  max-width: 1000px;
+
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+
+  /* height: 500px; */
+}
+
+/* ================================
+   LEFT & RIGHT LAYOUT
+   ================================ */
+
+.left, .right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* ================================
+   CARD STYLE
+   ================================ */
+
+.card {
+  /* background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border); */
+
+  padding: 0px;
+}
+
+.title {
+  font-size: var(--title-size);
+  margin: 0;
+  color: var(--primary-color);
+}
+
+.subtitle {
+  font-size: var(--subtitle-size);
+  color: var(--subtitle-color);
+  margin-top: 5px;
+}
+
+/* ================================
+   BMI RESULT STYLE
+   ================================ */
+
+.result-card {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.bmi-value {
+  font-size: 48px;
+  margin: 0;
+  color: white;
+  background-color: var(--primary-color);
+
+  width: 40%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.bmi-category {
+  font-size: 18px;
+  font-weight: 500;
+  color: orange;
+
+  text-align: center;
+
+  margin: 0;
+  margin-left: -10px;         /* remove ALL margin */
+  padding: 4px 12px;  /* keep minimal padding for shape */
+
+  background-color: antiquewhite;
+  border-radius: 20px;
+
+  display: flex;              /* enables vertical centering */
+  align-items: center;        /* vertical center */
+  justify-content: center;
+
+  height: 30%;
+}
+
+/* ================================
+   CONTENT BOXES
+   ================================ */
+
+.advice-box,
+.content-box {
+  margin-top: 10px;
+  background: var(--page-bg);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ================================
+   BUTTONS
+   ================================ */
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--primary-color);
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.btn.primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn.secondary {
+  background: white;
+  color: var(--primary-color);
+}
+
+.btn:hover {
+  background: var(--button-hover-bg);
+  color: var(--button-hover-text);
+}
+
+/* ================================
+   FOOTER
+   ================================ */
+
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+  color: var(--subtitle-color);
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+}

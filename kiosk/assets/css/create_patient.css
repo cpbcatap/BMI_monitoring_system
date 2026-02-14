@@ -1,0 +1,227 @@
+/* ================================
+   GLOBAL
+   ================================ */
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background: var(--page-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: var(--text-color);
+}
+
+.container {
+  width: 100%;
+  max-width: 850px;
+  padding: var(--pad);
+}
+
+/* ================================
+   2 COLUMN FORM LAYOUT
+   ================================ */
+
+#addPatientForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Make textarea full width */
+.form-group:has(textarea) {
+  grid-column: span 2;
+}
+
+/* Make button full width */
+#addPatientForm button {
+  grid-column: span 2;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+/* ================================
+   CARD
+   ================================ */
+
+.card {
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.card h2 {
+  margin-bottom: 6px;
+  font-size: var(--title-size);
+  color: var(--primary-color);
+}
+
+.subtitle {
+  margin-bottom: 25px;
+  font-size: var(--subtitle-size);
+  color: var(--subtitle-color);
+}
+
+/* ================================
+   FORM
+   ================================ */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--gap);
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  transition: 0.2s ease;
+  font-family: var(--font-family);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(128, 0, 0, 0.1);
+}
+
+/* ================================
+   BUTTON
+   ================================ */
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: var(--button-hover-bg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ================================
+   RESULT MESSAGE
+   ================================ */
+
+#result {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
+
+/* ================================
+   TITLE + ICON DESIGN
+   ================================ */
+
+.card-title {
+  display: flex;
+  /* align-items: center;
+  justify-content: center;  👈 centers icon + text */
+
+  gap: 14px;
+  font-size: var(--title-size);
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+/* Circular icon badge */
+.icon-badge {
+  width: 48px;
+  height: 48px;
+  background: rgba(128, 0, 0, 0.08);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.icon-badge i{
+  height: 35px;
+  width: 35px;
+}
+
+/* ================================
+   ICON SIZE OVERRIDE
+   ================================ */
+
+@media (max-width: 768px) {
+  #addPatientForm {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width,
+  #addPatientForm button {
+    grid-column: span 1;
+  }
+}/* ================================
+   CARD HEADER (Left - Right)
+   ================================ */
+
+.card-header {
+  display: flex;
+  justify-content: space-between;  /* pushes items apart */
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* Keep title aligned nicely */
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: var(--title-size);
+  color: var(--primary-color);
+  margin: 0;
+}
+
+/* Logout button */
+.btn-logout {
+  background: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: var(--primary-color);
+  color: white;
+}

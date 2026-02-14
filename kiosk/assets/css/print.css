@@ -1,0 +1,127 @@
+.header-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    color: var(--primary-color); /* uses your root palette */
+}
+
+/* ================================
+   Base Reset
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+}
+
+/* ================================
+   Page Layout
+================================ */
+body {
+  background: var(--page-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* ================================
+   Card Wrapper
+================================ */
+.print-wrapper {
+  width: 100%;
+  max-width: 720px;
+  padding: var(--gap);
+}
+
+.print-card {
+  background: var(--card-bg);
+  padding: 40px var(--pad);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  border: 3px solid var(--border);
+  border-color: var(--primary-color);
+  
+}
+
+/* ================================
+   Typography
+================================ */
+.title {
+  font-size: var(--title-size);
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: var(--subtitle-size);
+  color: var(--subtitle-color);
+  margin-bottom: 30px;
+}
+
+/* ================================
+   Countdown Box
+================================ */
+.countdown-box {
+  margin-bottom: 35px;
+}
+
+.countdown-label {
+  color: var(--subtitle-color);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.countdown-value {
+  font-size: 60px;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.countdown-unit {
+  font-size: 14px;
+  color: var(--subtitle-color);
+}
+
+/* ================================
+   Buttons
+================================ */
+.button-group {
+  display: flex;
+  gap: var(--gap);
+  justify-content: center;
+}
+
+.btn {
+  padding: 12px 22px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
+  min-width: 150px;
+}
+
+/* Primary Button */
+.primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.primary:hover {
+  background: var(--button-hover-bg);
+  color: var(--button-hover-text);
+}
+
+/* Secondary Button */
+.secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-color);
+}
+
+.secondary:hover {
+  background: var(--border);
+}

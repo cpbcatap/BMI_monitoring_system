@@ -1,0 +1,18 @@
+/* Cancel link goes below buttons */
+.cancel-link {
+  width: 100%;
+  text-align: center;
+  /* margin-top: 20px; */
+}
+
+.cancel-link a {
+  font-size: 14px;
+  color: var(--subtitle-color);
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.cancel-link a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
