@@ -2,7 +2,7 @@
     $(function() {
         const table = $('#recordTable').DataTable({
             ajax: {
-                url: 'api/record_table_data.php',
+                url: '../api/view_records.php',
                 dataSrc: 'data'
             },
 

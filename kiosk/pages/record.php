@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+// to protect the page 
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -16,14 +24,14 @@
         <!-- Structure Header -->
         <div class="header">
             <div class="header-left">
-                <div class="profile-name">Full Name: <span> Juan Dela Cruz</span></div>
-                <div class="profile-data">Username: <span>juan_dela_cruz</span></div>
-                <div class="profile-data">Birthday: <span>January 1, 1990</span></div>
-                <div class="profile-data">Gender: <span>Male</span></div>
-                <div class="profile-data">Barangay: <span>Barangay 1</span></div>
+                <div class="profile-name">Full Name: <span><?php echo $_SESSION['full_name']; ?></span></div>
+                <div class="profile-data">Username: <span><?php echo $_SESSION['username']; ?></span></div>
+                <div class="profile-data">Birthday: <span><?php echo $_SESSION['birthday']; ?></span></div>
+                <div class="profile-data">Gender: <span><?php echo $_SESSION['gender']; ?></span></div>
+                <div class="profile-data">Barangay: <span><?php echo $_SESSION['barangay']; ?></span></div>
             </div>
             <div class="header-right">
-                <button class="logout">Logout</button>
+                <button class="logout" onclick="goToBmiResult()">Go Back</button>
             </div>
         </div>
 
@@ -57,8 +65,13 @@
     <script src="../../plugins/js/jquery.min.js"></script>
     <script src="../../plugins/datatables/datatables.min.js"></script>
 
-    <?php include 'script/recordTable.php'; ?>
+    <?php include '../script/recordTable.php'; ?>
 
+    <script>
+        function goToBmiResult() {
+            window.location.href = "bmi_result.php";
+        }
+    </script>
 
 </body>
 

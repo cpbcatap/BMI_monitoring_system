@@ -1,73 +1,64 @@
 <?php
-header('Content-Type: application/json');
+require __DIR__ . '/../../includes/db.php';
 
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "bmi_monitoring";
+header('Content-Type: application/json; charset=UTF-8');
 
 try {
-    $conn = new PDO(
-        "mysql:host=$servername;dbname=$dbname;charset=utf8mb4",
-        $username,
-        $password,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-    
-    // get data from AJAX
-    $full_name = $_POST['full_name'];
-    $birthday = $_POST['birthday'];
-    $gender = $_POST['gender'];
-    $barangay = $_POST['barangay'];
-    $medical_con = $_POST['medical_con'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
 
-    // Hash the password securely
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        http_response_code(405);
+        echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
+        exit;
+    }
+
+    // Validate required fields
+    $required = ['full_name', 'birthday', 'gender', 'barangay', 'username', 'password'];
+    foreach ($required as $field) {
+        if (empty($_POST[$field])) {
+            http_response_code(400);
+            echo json_encode(['status' => 'error', 'message' => "Missing field: $field"]);
+            exit;
+        }
+    }
+
+    // Sanitize inputs
+    $full_name = trim($_POST['full_name']);
+    $birthday  = trim($_POST['birthday']);
+    $gender    = trim($_POST['gender']);
+    $barangay  = trim($_POST['barangay']);
+    $username  = trim($_POST['username']);
+    $password  = $_POST['password'];
+
+    // Secure password hashing
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
+    $sql = "
+    INSERT INTO profile 
+      (full_name, birthday, gender, barangay, username, password)
+    VALUES 
+      (:full_name, :birthday, :gender, :barangay, :username, :password)
+  ";
 
-    // $full_name = "TEST PATIENT";
-
-        // if (!$full_name) {
-        //     echo json_encode([
-        //         "status" => "error",
-        //         "message" => "Full name is required"
-        //     ]);
-        //     exit;
-        // }
-   
-
-    // SQL INSERT
-    // "read_students is the table name"
-     $sql = "INSERT INTO profile (full_name, birthday, gender, barangay, medical_con, username, password) 
-             VALUES (:full_name, :birthday, :gender, :barangay, :medical_con, :username, :password)";
-
- 
-
-
-    $stmt = $conn->prepare($sql);
+    $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':full_name' => $full_name,
-        ':birthday' => $birthday,
-        ':gender' => $gender,
-        ':barangay' => $barangay,
-        ':medical_con' => $medical_con,
-        ':username' => $username,
-        ':password' => $hashed_password,
-        
-        
+        ':birthday'  => $birthday,
+        ':gender'    => $gender,
+        ':barangay'  => $barangay,
+        ':username'  => $username,
+        ':password'  => $hashed_password
     ]);
 
     echo json_encode([
-        "status" => "success",
-        "message" => "patient added successfully"
-    ]);
+        'status'  => 'success',
+        'message' => 'Patient added successfully'
+    ], JSON_UNESCAPED_UNICODE);
+} catch (Throwable $e) {
 
-} catch (PDOException $e) {
+    http_response_code(500);
+
     echo json_encode([
-        "status" => "error",
-        "message" => $e->getMessage()
+        'status' => 'error',
+        'message' => 'Server error'
     ]);
 }

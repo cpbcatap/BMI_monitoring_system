@@ -4,11 +4,10 @@
 <?php
 session_start();
 // to protect the page 
-if(!isset($_SESSION['user_id'])){
-    header("Location: login.php");
-    exit;
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php");
+  exit;
 }
-
 ?>
 
 <head>
@@ -22,23 +21,27 @@ if(!isset($_SESSION['user_id'])){
 </head>
 
 <body>
-    <!-- LOGO SECTION -->
+  <!-- LOGO SECTION -->
   <div class="main">
     <div class="logo"><i class="uil--heart-rate"></i></div>
     <div class="title">BMI Monitoring System</div>
     <div class="subtitle">Know Your Numbers. Monitor Your Progress.</div>
     <div class="subtitle start"> START CALCULATING BMI?</div>
-    
-    <form class="start_container">
-      <button  type="submit"> Start </button>
-      <div class="cancel-link">
-          <!-- change the link  -->
-          <a href="../api/logout.php">Logout</a> 
-        </div>
-    </form>
 
-
+    <button class="bmi-start-btn" type="button" onclick="startBMI()"> Start </button>
+    <div class="cancel-link">
+      <!-- change the link  -->
+      <a href="../api/logout.php">Logout</a>
+    </div>
   </div>
+
+  <script>
+    function startBMI() {
+      console.log("Start BMI Calculator");
+      window.location.href = 'bmi_result.php';
+    }
+  </script>
+
 </body>
 
 </html>

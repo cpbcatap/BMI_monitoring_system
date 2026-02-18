@@ -2,12 +2,12 @@
 .cancel-link {
   width: 100%;
   text-align: center;
-  /* margin-top: 20px; */
+  margin-top: 20px;
 }
 
 .cancel-link a {
-  font-size: 14px;
-  color: var(--subtitle-color);
+  font-size: 16px;
+  color: var(--primary-color);
   text-decoration: none;
   transition: 0.2s ease;
 }
@@ -15,4 +15,21 @@
 .cancel-link a:hover {
   color: var(--primary-color);
   text-decoration: underline;
+}
+
+.bmi-start-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.bmi-start-btn {
+  background: var(--button-hover-bg);
+  box-shadow: var(--shadow-sm);
 }

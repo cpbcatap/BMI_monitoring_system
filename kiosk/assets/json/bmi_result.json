@@ -1,0 +1,101 @@
+{
+  "categories": [
+    {
+      "name": "Underweight",
+      "min": 0,
+      "max": 18.4,
+      "nutrition_goal": "Safe weight gain and improved nutrient intake.",
+      "dietitian_advice": [
+        "Eat 3 meals + 1-2 healthy snacks.",
+        "Increase calorie intake gradually using nutrient-dense foods.",
+        "Include a balance of carbohydrates, protein, and fats in every meal.",
+        "Eat protein-rich foods.",
+        "Include healthy fats.",
+        "Avoid skipping meals.",
+        "Consult a doctor for possible underlying causes such as illness or metabolic problems."
+      ],
+      "food_examples": [
+        "Rice",
+        "Eggs",
+        "Fish",
+        "Milk",
+        "Nuts",
+        "Seeds",
+        "Peanut butter"
+      ],
+      "nutrition_range": "< 18.5"
+    },
+    {
+      "name": "Normal Weight",
+      "min": 18.5,
+      "max": 24.9,
+      "nutrition_goal": "Maintain a healthy weight and prevent diseases.",
+      "dietitian_advice": [
+        "Follow Pinggang Pinoy every meal.",
+        "Limit sugary, salty, and fatty foods.",
+        "Stay physically active."
+      ],
+      "food_examples": [
+        "Vegetables",
+        "Fruits",
+        "Rice",
+        "Fish",
+        "Meat",
+        "Poultry",
+        "Legumes"
+      ],
+      "nutrition_range": "18.5 – 24.9"
+    },
+    {
+      "name": "Overweight",
+      "min": 25,
+      "max": 29.9,
+      "nutrition_goal": "Gradual weight loss and better metabolic health.",
+      "dietitian_advice": [
+        "Focus on gradual and sustainable weight management, not crash dieting.",
+        "Limit intake of sugary, salty, and saturated fats.",
+        "Reduce portion size while increasing vegetables, fruits, and fiber-rich foods.",
+        "Choose healthier cooking methods like steaming, boiling, and grilling.",
+        "Be physically active with regular exercise.",
+        "Set realistic weight goals and track progress consistently."
+      ],
+      "food_examples": [
+        "Brown rice",
+        "Oats",
+        "Vegetables",
+        "Fish",
+        "Tokwa"
+      ],
+      "nutrition_range": "25 – 29.9"
+    },
+    {
+      "name": "Obese",
+      "min": 30,
+      "max": 100,
+      "nutrition_goal": "Sustainable weight management and reduced health risk.",
+      "dietitian_advice": [
+        "Practice food portion control.",
+        "Avoid sugary, fried, and processed food.",
+        "Emphasize whole foods, high-fiber meals, and adequate protein intake.",
+        "Seek professional guidance for a structured and individualized meal plan.",
+        "Avoid late-night eating or stress eating.",
+        "Have daily physical activity appropriate to your health status.",
+        "Consult a doctor for possible underlying causes such as illness or metabolic problems."
+      ],
+      "food_examples": [
+        "Green leafy vegetables",
+        "Fish",
+        "Legumes",
+        "Boiled foods",
+        "Steamed foods"
+      ],
+      "nutrition_range": "≥ 30"
+    }
+  ],
+  "important_reminders": [
+    "BMI is a screening tool, not a diagnosis.",
+    "Pregnant women, children, and elderly individuals need special guidance.",
+    "Maintain a healthy lifestyle: proper diet, physical activity, enough sleep, and stress management.",
+    "Always consult a doctor for possible underlying medical or metabolic conditions."
+  ]
+}

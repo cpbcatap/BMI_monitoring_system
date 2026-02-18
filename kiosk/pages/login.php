@@ -15,7 +15,7 @@
     <div class="logo"><i class="uil--heart-rate"></i></div>
     <div class="title">BMI Monitoring System</div>
     <div class="subtitle">Know Your Numbers. Monitor Your Progress.</div>
-    
+
     <form id="loginForm">
       <input type="text" name="username" id="username" placeholder="username" required>
       <input type="password" name="password" id="password" placeholder="password" required>
@@ -31,33 +31,33 @@
   <script src="../../plugins/js/jquery.min.js"></script>
 
   <script>
-  $("#loginForm").submit(function(e) {
+    $("#loginForm").submit(function(e) {
       e.preventDefault();
 
       $.ajax({
-          url: "../api/api_login.php",
-          type: "POST",
-          data: {
-              username: $("#username").val(),
-              password: $("#password").val()
-          },
-          success: function(response) {
+        url: "../api/api_login.php",
+        type: "POST",
+        data: {
+          username: $("#username").val(),
+          password: $("#password").val()
+        },
+        success: function(response) {
 
-              if(response.status === "success") {
-                  alert("Login successful!");
-                  window.location.href = "bmi_calculator.php"; 
-              } else {
-                  alert(response.message);
-              }
-
-          },
-          error: function() {
-              alert("Something went wrong.");
+          if (response.status === "success") {
+            // alert("Login successful!");
+            window.location.href = "bmi_calculator.php";
+          } else {
+            alert(response.message);
           }
+
+        },
+        error: function() {
+          alert("Something went wrong.");
+        }
       });
 
-  });
-</script>
+    });
+  </script>
 </body>
 
 </html>

@@ -1,5 +1,14 @@
 <?php
-require __DIR__ . '/../../../includes/db.php';
+session_start();
+// to protect the page 
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php");
+  exit;
+}
+
+$user_id = $_SESSION['user_id'];
+
+require __DIR__ . '/../../includes/db.php';
 
 header('Content-Type: application/json; charset=UTF-8');
 
@@ -12,7 +21,8 @@ $sql = "
     classification AS Class,
     timestamp AS Timestamp
   FROM records
-  ORDER BY user_id DESC
+  WHERE user_id = $user_id 
+  ORDER BY timestamp DESC;
 ";
 
 try {

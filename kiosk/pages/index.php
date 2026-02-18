@@ -18,22 +18,13 @@
     <div class="subtitle">Know Your Numbers. Monitor Your Progress.</div>
 
     <button class="patientLogin" type="submit" onclick="goToLogin()">
-      <i class="uil--login"></i> Patient Login
-    </button>
-
-    <button class="newPatient" type="submit" onclick="goToCreatePatient()">
-      <i class="bxs--user-plus"></i> RegisterNew Patient
+      START
     </button>
   </div>
 
   <script>
     function goToLogin() {
-      console.log("HELLO");
       window.location.href = "login.php";
-    }
-
-    function goToCreatePatient() {
-      window.location.href = "create_patient.php";
     }
   </script>
 </body>
