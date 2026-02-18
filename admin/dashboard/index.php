@@ -21,7 +21,7 @@
         <div class="header-subtitle">Welcome, Healthcare Worker</div>
       </div>
       <div class="header-right">
-        <button class="logout">Logout</button>
+        <button class="logout" onclick="goToLogin()">Logout</button>
       </div>
     </div>
     <!-- Structure for Cards -->
@@ -83,6 +83,11 @@
 
   </div>
 
+  <script>
+    function goToLogin() {
+      window.location.href = "../login/login.php";
+    }
+  </script>
   <script src="../../plugins/js/jquery.min.js"></script>
   <script src="../../plugins/datatables/datatables.min.js"></script>
 

@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+  "editor.aiStats.enabled": false,
+  "github.copilot.chat.notebook.enhancedNextEditSuggestions.enabled": true,
+  "editor.inlineSuggest.triggerCommandOnProviderChange": true,
+  "github.copilot.chat.languageContext.typescript.enabled": true
+}

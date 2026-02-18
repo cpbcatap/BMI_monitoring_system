@@ -18,7 +18,7 @@
     <div class="subtitle">Know Your Numbers. Monitor Your Progress.</div>
     <div class="buttons">
       <button class="login" onclick="goToLogin()">Login</button>
-      <button class="register">Register</button>
+      <button class="register" onclick="goToRegister()">Register</button>
     </div>
   </div>
 
@@ -27,6 +27,10 @@
 <script>
   function goToLogin() {
     window.location.href = "login.php";
+  }
+
+  function goToRegister() {
+    window.location.href = "register.php";
   }
 </script>
 

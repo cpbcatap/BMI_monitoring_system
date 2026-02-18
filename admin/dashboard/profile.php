@@ -23,7 +23,7 @@
         <div class="profile-data">Barangay:</div>
       </div>
       <div class="header-right">
-        <button class="logout">Logout</button>
+        <button class="logout" onclick="goToLogout()">Logout</button>
       </div>
     </div>
 
@@ -40,7 +40,7 @@
               <th>Height (cm)</th>
               <th>BMI</th>
               <th>classification</th>
-              
+
             </tr>
           </thead>
           <tbody>
@@ -53,7 +53,11 @@
 
   </div>
 
-
+  <script>
+    function goToLogout() {
+      window.location.href = "index.php";
+    }
+  </script>
   <script src="../../plugins/js/jquery.min.js"></script>
   <script src="../../plugins/datatables/datatables.min.js"></script>
 

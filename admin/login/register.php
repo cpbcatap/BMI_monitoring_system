@@ -23,19 +23,24 @@
         Register Email Address
       </div>
 
-      <form> 
+      <form>
         <input type="email" name="email" placeholder="juandelacruz@gmail.com" required>
-        <button type="submit" id="send-otp">Send OTP</button>
-
+        <!-- need clarification if what type of button submit or button -->
+        <button type="button" id="send-otp" onclick="goToOTP()">Send OTP</button>
         <div class="cancel-link">
           <a href="login.php">Cancel</a>
         </div>
       </form>
 
     </div>
-    
+
 
   </div>
 </body>
+<script>
+  function goToOTP() {
+    window.location.href = "otp.php";
+  }
+</script>
 
 </html>
