@@ -1,141 +1,93 @@
-
 /* ================================
-   OTP LINK 
-   ================================ */
-/* Make form a single row */
-/* Make OTP inputs in one row */
-/* FORCE horizontal row */
-form.otp-value {
-    display: flex !important;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: nowrap !important;
-}
-
-/* OVERRIDE global input styling */
-form.otp-value input {
-    display: inline-block !important;
-    width: 55px !important;
-    height: 60px !important;
-    margin: 0 !important;
-
-    text-align: center;
-    font-size: 22px;
-    font-weight: 600;
-
-    border-radius: 12px;
-    border: 2px solid #e0e0e0;
-    background: #f9fbff;
-    transition: all 0.25s ease;
-    outline: none;
-}
-
-/* Focus effect */
-form.otp-value input:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.15);
-    transform: translateY(-2px);
-}
-
-/* Cancel link goes below */
-form.otp-value .cancel-link {
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-}
-
-/* Align "Enter OTP:" to the left */
-.form-container .form-title {
-    text-align: center !important;
-    width: 100%;
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
-/* Optional: align with OTP boxes nicely */
-.form-container {
-    text-align: left;
-}
-
-/* ================================
-   OTP FORM OVERRIDE
+   OTP LAYOUT (FORCE BOX ROW)
    ================================ */
 
-/* Make OTP inputs horizontal */
-form.otp-value {
-  flex-direction: row !important;
+.form-title {
+  text-align: center;
+}
+
+form.otp-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* the row of 6 boxes */
+form.otp-form .otp-row {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 14px;
-  max-width: 100%;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 10px 0 22px 0;
 }
 
-/* Override global full-width input */
-form.otp-value input {
-  width: 55px !important;
+/* FORCE 1-digit box sizing (override global input styles) */
+form.otp-form .otp-row input.otp {
+  width: 54px !important;
   height: 60px !important;
   padding: 0 !important;
+  margin: 0 !important;
 
-  text-align: center;
-  font-size: 20px;
-  font-weight: 600;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
 
-  border-radius: 8px;
-  border: 2px solid #dcdcdc;
-  background: white;
-  color: var(--text-color);
+  text-align: center !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
 
-  transition: 0.25s ease;
+  border-radius: 10px !important;
+  border: 2px solid #dcdcdc !important;
+  background: #fff !important;
+
+  outline: none !important;
+  box-sizing: border-box !important;
 }
 
-/* Focus state using your palette */
-form.otp-value input:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.12);
+/* focus */
+form.otp-form .otp-row input.otp:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.12) !important;
   transform: translateY(-2px);
 }
 
-/* Remove placeholder look */
-form.otp-value input::placeholder {
-  color: var(--subtitle-color);
-  font-size: 18px;
-}
-
-/* ================================
-   ENTER BUTTON (PALETTE VERSION)
-   ================================ */
-
+/* button below the boxes */
 #enter-otp {
   width: 100%;
-  max-width: 320px;
-  margin: 30px auto 10px auto;
-  display: block;
-
+  max-width: 340px;
   padding: 12px;
-  border-radius: 6px;
+
+  border-radius: 8px;
   border: 2px solid var(--primary-color);
 
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 1px;
 
   background: var(--primary-color);
-  color: white;
+  color: #fff;
 
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: 0.25s ease;
 }
 
-/* Hover matches your theme */
-#enter-otp:hover {
-  background: #660000;
-  border-color: #660000;
+/* cancel below button */
+.cancel-link {
+  margin-top: 14px;
+  text-align: center;
 }
 
-/* Click press effect */
-#enter-otp:active {
-  transform: scale(0.97);
+/* optional: make it fit on small screens */
+@media (max-width: 420px) {
+  form.otp-form .otp-row {
+    gap: 10px;
+  }
+  form.otp-form .otp-row input.otp {
+    width: 46px !important;
+    height: 54px !important;
+  }
 }
-

@@ -23,7 +23,7 @@
                 <div class="profile-data">Barangay:</div>
             </div>
             <div class="header-right">
-                <button class="logout" onclick="goToLogout()">Logout</button>
+                <button class="logout" onclick="goToDashboard()">Go Back</button>
             </div>
         </div>
 
@@ -53,13 +53,51 @@
 
     </div>
 
-    <script>
-        function goToLogout() {
-            window.location.href = "index.php";
-        }
-    </script>
     <script src="../../plugins/js/jquery.min.js"></script>
     <script src="../../plugins/datatables/datatables.min.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('user_id');
+
+            console.log("userId:", userId);
+
+            $.ajax({
+                url: 'api/get_user_profile.php',
+                method: 'GET',
+                dataType: 'json',
+                data: {
+                    user_id: userId
+                },
+                success: function(response) {
+                    console.log("response:", response);
+
+                    // response = { data: [ { ... } ] }
+                    if (response.data && response.data.length > 0) {
+                        const data = response.data[0];
+
+                        $('.profile-name').text(data.full_name);
+                        $('.profile-data').eq(0).text('Username: ' + data.username);
+                        $('.profile-data').eq(1).text('Birthday: ' + data.birthday);
+                        $('.profile-data').eq(2).text('Gender: ' + data.gender);
+                        $('.profile-data').eq(3).text('Barangay: ' + data.barangay);
+                    } else {
+                        console.warn("No profile data returned");
+                    }
+                },
+                error: function(xhr) {
+                    console.error("AJAX error:", xhr.responseText);
+                }
+            });
+        });
+
+        function goToDashboard() {
+            window.location.href = "../dashboard";
+        }
+    </script>
+
 
     <?php include 'script/recordTable.php'; ?>
 

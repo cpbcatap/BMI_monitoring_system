@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../assets/css/icon.css">
   <link rel="stylesheet" href="../assets/css/root.css">
   <link rel="stylesheet" href="../assets/css/dashboard.css">
+  <link rel="stylesheet" href="../assets/css/modal.css">
   <link rel="stylesheet" href="../../plugins/datatables/datatables.min.css">
 </head>
 
@@ -21,7 +22,7 @@
         <div class="header-subtitle">Welcome, Healthcare Worker</div>
       </div>
       <div class="header-right">
-        <button class="logout" onclick="goToLogin()">Logout</button>
+        <button class="logout" onclick="goToLogout()">Logout</button>
       </div>
     </div>
     <!-- Structure for Cards -->
@@ -83,6 +84,24 @@
 
   </div>
 
+  <!-- Delete Confirm Modal -->
+  <div id="deleteModal" class="modal-overlay">
+    <div class="modal-box modal-error" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+      <div class="modal-icon">⚠️</div>
+      <h3 id="deleteModalTitle">Delete patient?</h3>
+      <p id="deleteModalMsg">This action cannot be undone.</p>
+
+      <div class="scan-actions">
+        <button type="button" id="deleteCancelBtn" class="scan-btn scan-btn-secondary">
+          Cancel
+        </button>
+        <button type="button" id="deleteConfirmBtn" class="scan-btn">
+          Yes, delete
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     function goToLogin() {
       window.location.href = "../login/login.php";
@@ -94,14 +113,10 @@
   <?php include 'script/patientTable.php'; ?>
 
   <script>
-    var totalPatients = document.getElementById('totalPatients');
-    var totalRecords = document.getElementById('totalRecords');
-    var todaysChecks = document.getElementById('todaysChecks');
-
-    $(function() {
+    function reloadCards() {
       $.ajax({
         type: "POST",
-        url: "api/cards_data.php", // adjust path if needed (see note below)
+        url: "api/cards_data.php",
         dataType: "json",
         success: function(res) {
           if (!res || !res.ok) {
@@ -117,8 +132,13 @@
           console.error("Stats API error:", xhr.status, xhr.responseText);
         }
       });
+    }
+
+    $(function() {
+      reloadCards(); // initial load
     });
   </script>
+
 
 </body>
 

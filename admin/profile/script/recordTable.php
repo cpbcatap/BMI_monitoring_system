@@ -1,19 +1,24 @@
 <script>
   $(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('user_id');
+
     const table = $('#recordTable').DataTable({
       ajax: {
         url: 'api/record_table_data.php',
+        data: function(d) {
+          d.user_id = userId; // ✅ pass user_id to PHP
+        },
         dataSrc: 'data'
       },
-
       columns: [{
-          data: 'ID'
+          data: 'ID' //0
         },
         {
-          data: 'Timestamp'
+          data: 'Timestamp' //1
         },
         {
-          data: 'Weight'
+          data: 'Weight' //2
         },
         {
           data: 'Height'
@@ -25,39 +30,32 @@
           data: 'Class'
         }
       ],
-
       columnDefs: [{
           targets: 0,
           visible: false
-        }, // hide ID
+        },
         {
           targets: '_all',
           className: 'dt-left'
         }
       ],
-
       scrollX: true,
       scrollCollapse: true,
       responsive: false,
-      autoWidth: true, // IMPORTANT: allow recalculation
-
+      autoWidth: true,
       ordering: true,
       order: [
         [0, 'desc']
       ],
       paging: true,
-      searching: true,
+      searching: true
     });
 
-    /* 🔑 THIS FIXES THE “STUCK WIDTH” ISSUE */
     function adjustTable() {
       table.columns.adjust().draw(false);
     }
-
-    // On resize
     window.addEventListener('resize', adjustTable);
-
-    // On sidebar/layout changes (just in case)
     setTimeout(adjustTable, 200);
+
   });
 </script>
