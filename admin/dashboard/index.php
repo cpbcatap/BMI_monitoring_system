@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+if (!isset($_SESSION['admin_id'])) {
+  header("Location: ../login/login.php");
+  exit;
+}
+?>
 
 <head>
   <meta charset="UTF-8">
@@ -137,6 +144,10 @@
     $(function() {
       reloadCards(); // initial load
     });
+
+    function goToLogout() {
+      window.window.location.href = "../login/api/logout.php";
+    }
   </script>
 
 
