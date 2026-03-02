@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="../assets/css/icon.css">
   <link rel="stylesheet" href="../assets/css/root.css">
   <link rel="stylesheet" href="../assets/css/login.css">
+  <link rel="stylesheet" href="../assets/css/keyboard.css" />
+
 </head>
 
 <body>
@@ -17,8 +19,8 @@
     <div class="subtitle">Know Your Numbers. Monitor Your Progress.</div>
 
     <form id="loginForm">
-      <input type="text" name="username" id="username" placeholder="username" required>
-      <input type="password" name="password" id="password" placeholder="password" required>
+      <input class="use-keyboard-input" type="text" name="username" id="username" placeholder="username" required>
+      <input class="use-keyboard-input" type="password" name="password" id="password" placeholder="password" required>
       <button type="submit">Login</button>
 
       <div class="register-link">
@@ -30,6 +32,7 @@
 
   <script src="../../plugins/js/jquery.min.js"></script>
 
+  <script src="../script/keyboard_script.js"></script>
   <script>
     $("#loginForm").submit(function(e) {
       e.preventDefault();

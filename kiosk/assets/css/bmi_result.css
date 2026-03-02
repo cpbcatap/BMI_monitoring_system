@@ -22,7 +22,7 @@ body {
   padding: 40px;
 
   width: 100%;
-  max-width: 1000px;
+  max-width: 1150px;
 
   background: var(--card-bg);
   border-radius: var(--radius);
@@ -79,18 +79,18 @@ body {
 }
 
 .bmi-value {
-  font-size: 48px;
+  font-size: 50px;
   margin: 0;
   color: white;
   background-color: var(--primary-color);
 
-  width: 40%;
+  width: 35%;
   padding: 10px;
   border-radius: 10px;
 }
 
 .bmi-category {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
   color: orange;
 
@@ -121,7 +121,7 @@ body {
   padding: 12px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
@@ -143,6 +143,7 @@ body {
   cursor: pointer;
   font-weight: 600;
   transition: 0.3s ease;
+  font-size: 16px;
 }
 
 .btn.primary {
@@ -167,7 +168,7 @@ body {
 footer {
   text-align: center;
   padding: 20px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--subtitle-color);
 }
 
@@ -183,4 +184,36 @@ footer {
   .button-group {
     flex-direction: column;
   }
+}
+
+.hw-row{
+  display:flex;
+  gap:12px;
+  width: 30%;
+  margin-top:14px;
+}
+
+.hw-item{
+  flex:1;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background: rgba(255,255,255,0.6);
+}
+
+.hw-label{
+  font-size:12px;
+  opacity:0.75;
+  margin-bottom:6px;
+}
+
+.hw-value{
+  font-size:20px;
+  font-weight:700;
+}
+
+.hw-unit{
+  font-size:12px;
+  opacity:0.7;
+  margin-left:6px;
 }

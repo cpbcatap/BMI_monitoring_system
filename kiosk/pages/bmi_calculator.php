@@ -58,7 +58,7 @@ if (!isset($_SESSION['user_id'])) {
 
   <script>
     const user_id = "<?php echo $_SESSION['user_id']; ?>";
-    const ws = new WebSocket("ws://192.168.0.105:8765");
+    const ws = new WebSocket("ws://192.168.0.103:8765");
 
     const scanModal = document.getElementById('scanModal');
     const scanMsg = document.getElementById('scanMsg');

@@ -60,6 +60,13 @@
     // Fill main BMI UI
     $('.bmi-value').text(bmi.toFixed(1));
 
+    // NEW: Fill height & weight
+    const height = toNum(saved.height_cm);
+    const weight = toNum(saved.weight_kg);
+
+    $('.height-value').text(Number.isFinite(height) ? height.toFixed(1) : '--');
+    $('.weight-value').text(Number.isFinite(weight) ? weight.toFixed(1) : '--');
+
     // 2) Load JSON rules and render advice/food/goals based on BMI
     $.ajax({
       url: CATEGORIES_JSON_URL,

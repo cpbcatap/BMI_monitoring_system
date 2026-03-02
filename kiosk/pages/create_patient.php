@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../assets/css/create_patient.css">
     <link rel="stylesheet" href="../assets/css/icon.css">
     <link rel="stylesheet" href="../assets/css/modal.css">
+    <link rel="stylesheet" href="../assets/css/keyboard.css" />
 </head>
 
 <body>
@@ -29,11 +30,11 @@
             <form id="addPatientForm">
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" id="full_name" name="full_name" placeholder="Juan Dela Cruz" required>
+                    <input class="use-keyboard-input" type="text" id="full_name" name="full_name" placeholder="Juan Dela Cruz" required>
                 </div>
                 <div class="form-group">
                     <label>Birthday</label>
-                    <input type="date" id="birthday" name="birthday" required>
+                    <input class="use-keyboard-input" type="date" id="birthday" name="birthday" required>
                 </div>
                 <div class="form-group">
                     <label>Gender</label>
@@ -51,11 +52,11 @@
                 </div>
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" id="username" name="username" placeholder="juandelacruz2026" required>
+                    <input class="use-keyboard-input" type="text" id="username" name="username" placeholder="juandelacruz2026" required>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="password" name="password" placeholder="********" required>
+                    <input class="use-keyboard-input" type="password" id="password" name="password" placeholder="********" required>
                 </div>
 
                 <button type="submit" class="btn-primary">Create Profile</button>
@@ -77,6 +78,8 @@
     </div>
 
     <script src="../../plugins/js/jquery.min.js"></script>
+
+    <script src="../script/keyboard_script.js"></script>
 
     <script>
         $(document).ready(function() {

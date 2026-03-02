@@ -15,7 +15,7 @@ body {
 
 .container {
   width: 100%;
-  max-width: 850px;
+  max-width: 1150px;
   padding: var(--pad);
 }
 
@@ -57,7 +57,7 @@ body {
 
 .card h2 {
   margin-bottom: 6px;
-  font-size: var(--title-size);
+  font-size: 30px;
   color: var(--primary-color);
 }
 
@@ -78,7 +78,7 @@ body {
 }
 
 label {
-  font-size: 14px;
+  font-size: 22px;
   margin-bottom: 6px;
   font-weight: 600;
 }
@@ -89,7 +89,7 @@ textarea {
   padding: 12px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  font-size: 14px;
+  font-size: 22px;
   transition: 0.2s ease;
   font-family: var(--font-family);
 }
@@ -118,7 +118,7 @@ textarea:focus {
   color: white;
   border: none;
   border-radius: var(--radius-sm);
-  font-size: 15px;
+  font-size: 22px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s ease;
@@ -159,8 +159,8 @@ textarea:focus {
 
 /* Circular icon badge */
 .icon-badge {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   background: rgba(128, 0, 0, 0.08);
   border-radius: 50%;
   display: flex;
@@ -215,7 +215,7 @@ textarea:focus {
   border: 1px solid var(--primary-color);
   padding: 8px 14px;
   border-radius: var(--radius-sm);
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 600;
   text-decoration: none;
   transition: 0.2s ease;

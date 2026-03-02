@@ -24,28 +24,14 @@ WS_PORT = 8765
 def escpos_receipt_bytes(payload: Dict[str, Any]) -> bytes:
     # Basic ESC/POS formatting (works on most 58/80mm thermal printers)
     def line(s=""):
-        return (str(s) + "\n").encode("utf-8", errors="replace")
+        return (s + "\n").encode("utf-8", errors="replace")
 
-    # NEW fields
-    full_name = str(payload.get("full_name", "")).strip()
-    age = payload.get("age", "")
-    nutrition_goal = str(payload.get("nutrition_goal", "")).strip()
-
-    # existing fields
     height = payload.get("height_cm", "")
     weight = payload.get("weight_kg", "")
     bmi = payload.get("bmi", "")
     cls = payload.get("classification", "")
     user_id = payload.get("user_id", "")
     ts = payload.get("ts", None)
-
-    # normalize age to printable string
-    age_str = ""
-    try:
-        if age is not None and age != "":
-            age_str = str(int(age))
-    except Exception:
-        age_str = str(age).strip()
 
     if ts:
         try:
@@ -67,41 +53,15 @@ def escpos_receipt_bytes(payload: Dict[str, Any]) -> bytes:
     b += line("--------------------------------")
 
     b += b"\x1b\x61\x00"   # left
-
-    # NEW: identity block
-    if full_name:
-        b += line(f"Name: {full_name}")
-    if age_str:
-        b += line(f"Age:  {age_str}")
     if user_id:
         b += line(f"User ID: {user_id}")
-
     b += line(f"Date: {dt}")
     b += line("")
-
     b += line(f"Height (cm): {height}")
     b += line(f"Weight (kg): {weight}")
     b += line(f"BMI:         {bmi}")
     b += line(f"Class:       {cls}")
     b += line("")
-
-    # NEW: nutrition goal section
-    if nutrition_goal:
-        b += line("Nutrition Goal:")
-        # simple wrap for narrow printers (about 32 chars is safe for 58mm)
-        wrap = 32
-        words = nutrition_goal.split()
-        cur = ""
-        for w in words:
-            if len(cur) + len(w) + (1 if cur else 0) <= wrap:
-                cur = (cur + " " + w).strip()
-            else:
-                b += line(f"  {cur}")
-                cur = w
-        if cur:
-            b += line(f"  {cur}")
-        b += line("")
-
     b += line("--------------------------------")
     b += b"\x1b\x61\x01"   # center
     b += line("Thank you!")
@@ -328,14 +288,9 @@ async def ws_handler(ws):
             elif cmd == "print_bmi":
                 # Print receipt via USB printer
                 try:
+                    # you can validate required fields here if you want
                     payload = {
                         "user_id": str(req.get("user_id", "")).strip(),
-
-                        # NEW
-                        "full_name": str(req.get("full_name", "")).strip(),
-                        "age": req.get("age", ""),
-                        "nutrition_goal": str(req.get("nutrition_goal", "")).strip(),
-
                         "height_cm": req.get("height_cm", ""),
                         "weight_kg": req.get("weight_kg", ""),
                         "bmi": req.get("bmi", ""),
@@ -343,11 +298,13 @@ async def ws_handler(ws):
                         "ts": req.get("ts", int(time.time() * 1000)),
                     }
 
+                    # run blocking printer write in a thread so asyncio doesn't freeze
                     await asyncio.to_thread(print_to_usb_printer, payload)
+
                     await ws.send(json.dumps({"ok": True, "cmd": "print_ok"}))
                 except Exception as e:
                     await ws.send(json.dumps({"ok": False, "cmd": "print_error", "error": str(e)}))
-                    
+
             elif cmd == "ping":
                 await ws.send(json.dumps({"ok": True, "cmd": "pong"}))
 

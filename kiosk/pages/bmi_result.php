@@ -8,6 +8,28 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
+
+/* ==============================
+   COMPUTE AGE FROM SESSION
+   ============================== */
+
+$age_years = null;
+
+$birthday_raw = trim($_SESSION['birthday'] ?? '');
+if ($birthday_raw !== '') {
+
+    // Your format: 02-20-1996 (MM-DD-YYYY)
+    $dob = DateTime::createFromFormat('m-d-Y', $birthday_raw);
+
+    // Optional fallback formats
+    if (!$dob) $dob = DateTime::createFromFormat('Y-m-d', $birthday_raw);
+    if (!$dob) $dob = DateTime::createFromFormat('m/d/Y', $birthday_raw);
+
+    if ($dob) {
+        $today = new DateTime('today');
+        $age_years = $dob->diff($today)->y;
+    }
+}
 ?>
 
 <head>
@@ -36,6 +58,18 @@ if (!isset($_SESSION['user_id'])) {
             <div class="card result-card">
                 <h1 class="bmi-value">--</h1>
                 <p class="bmi-category">--</p>
+
+                <!-- NEW: height/weight display -->
+                <div class="hw-row">
+                    <div class="hw-item">
+                        <div class="hw-label">Height</div>
+                        <div class="hw-value"><span class="height-value">--</span> <span class="hw-unit">cm</span></div>
+                    </div>
+                    <div class="hw-item">
+                        <div class="hw-label">Weight</div>
+                        <div class="hw-value"><span class="weight-value">--</span> <span class="hw-unit">kg</span></div>
+                    </div>
+                </div>
             </div>
 
             <div class="card advice-card">
@@ -117,7 +151,7 @@ if (!isset($_SESSION['user_id'])) {
         // Change this if the website is opened from another device:
         // If the browser is running on the Raspberry Pi itself, localhost is OK.
         // If the browser is on another PC/phone, use ws://192.168.0.105:8765
-        const WS_URL = "ws://192.168.0.105:8765/";
+        const WS_URL = "ws://192.168.0.103:8765/";
 
         let P_ws = null;
         let P_wsReady = false;
@@ -173,11 +207,14 @@ if (!isset($_SESSION['user_id'])) {
     </script>
 
     <?php include '../script/get_bmi_result.php'; ?>
-    <?php include '../script/modal_print_bmi.php'; ?>
 
     <script>
         // Prevent double-saving (Yes/No/Countdown can all fire)
         let hasSavedBmi = false;
+
+        function getNutritionGoalText() {
+            return ($('.nutrition-goal-text').first().text() || '').trim();
+        }
 
         function getDashboardBmiData() {
             const saved = JSON.parse(sessionStorage.getItem("bmi_last_result") || "null");
@@ -229,8 +266,13 @@ if (!isset($_SESSION['user_id'])) {
             });
         }
 
+        // Pulled from PHP session
+        const USER_FULL_NAME = <?php echo json_encode($_SESSION['full_name'] ?? ''); ?>;
+        const USER_AGE = <?php echo json_encode($age_years); ?>; // number or null
+
         // Hook into your existing modal buttons:
         function confirmPrinting() {
+
             saveBmiRecord(true).done(function(saveResp) {
                 const data = getDashboardBmiData();
                 if (!data) {
@@ -238,10 +280,18 @@ if (!isset($_SESSION['user_id'])) {
                     return;
                 }
 
+                const nutrition_goal = getNutritionGoalText();
+
                 // Send print job to Raspberry Pi printer service
                 const ok = wsSend({
                     cmd: "print_bmi",
                     user_id: (JSON.parse(sessionStorage.getItem("bmi_last_result") || "{}").user_id || ""),
+
+                    // NEW
+                    full_name: USER_FULL_NAME || "",
+                    age: (USER_AGE === null || USER_AGE === undefined) ? "" : Number(USER_AGE),
+                    nutrition_goal: nutrition_goal,
+
                     height_cm: Number(data.height),
                     weight_kg: Number(data.weight),
                     bmi: Number(data.bmi),
@@ -254,7 +304,6 @@ if (!isset($_SESSION['user_id'])) {
                 closePrintModal();
                 window.location.href = '../api/logout.php';
             }).fail(function() {
-                // if save failed, allow retry
                 closePrintModal();
             });
         }
@@ -266,36 +315,10 @@ if (!isset($_SESSION['user_id'])) {
                 // optional redirect or UI update
             });
         }
-
-        // Countdown auto-save when time is up
-        // If your save_print_bmi.php already runs countdown, you can just call this when it hits 0.
-        // If not, here is a simple countdown starter:
-        let countdownTimer = null;
-
-        function startPrintCountdown(seconds) {
-            let s = seconds;
-            $('#printCountdown').text(s);
-
-            clearInterval(countdownTimer);
-            countdownTimer = setInterval(function() {
-                s--;
-                $('#printCountdown').text(s);
-
-                if (s <= 0) {
-                    clearInterval(countdownTimer);
-                    // Auto-save as "skipped/auto"
-                    saveBmiRecord(false).always(function() {
-                        closePrintModal();
-                        window.location.href = '../api/logout.php';
-                    });
-                }
-            }, 1000);
-        }
-
-        // Example: when you open the modal, call startPrintCountdown(10)
-        // openPrintModal() { $('#printModal').addClass('show'); startPrintCountdown(10); }
     </script>
 
+
+    <?php include '../script/modal_print_bmi.php'; ?>
 
     <script>
         function goToBmiCal() {

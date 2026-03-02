@@ -34,8 +34,6 @@ if (!isset($_SESSION['user_id'])) {
             </div>
 
             <div class="card result-card">
-                <h1 id="height" hidden>166</h1>
-                <h1 id="weight" hidden>59</h1>
                 <h1 class="bmi-value">--</h1>
                 <p class="bmi-category">--</p>
             </div>
@@ -114,31 +112,89 @@ if (!isset($_SESSION['user_id'])) {
 
 
     <script src="../../plugins/js/jquery.min.js"></script>
-    <?php include '../script/render_bmi_result_from_ws.php'; ?>
-    <?php include '../script/modal_print_bmi.php'; ?>
+
+    <script>
+        // Change this if the website is opened from another device:
+        // If the browser is running on the Raspberry Pi itself, localhost is OK.
+        // If the browser is on another PC/phone, use ws://192.168.0.105:8765
+        const WS_URL = "ws://192.168.0.105:8765/";
+
+        let P_ws = null;
+        let P_wsReady = false;
+
+        function wsConnect() {
+            if (P_ws && (P_ws.readyState === WebSocket.OPEN || P_ws.readyState === WebSocket.CONNECTING)) return;
+
+            P_wsReady = false;
+            P_ws = new WebSocket(WS_URL);
+
+            P_ws.onopen = () => {
+                P_wsReady = true;
+                console.log("[WS] connected");
+            };
+
+            P_ws.onmessage = (ev) => {
+                try {
+                    const msg = JSON.parse(ev.data);
+                    // optional: show toast / console log
+                    if (msg.cmd === "print_ok") console.log("[PRINT] OK", msg);
+                    if (msg.cmd === "print_error") console.error("[PRINT] ERROR", msg);
+                } catch (e) {
+                    console.log("[WS] message", ev.data);
+                }
+            };
+
+            P_ws.onclose = () => {
+                P_wsReady = false;
+                console.warn("[WS] disconnected");
+                // optional auto-reconnect
+                setTimeout(wsConnect, 1500);
+            };
+
+            P_ws.onerror = (e) => {
+                console.error("[WS] error", e);
+            };
+        }
+
+        function wsSend(obj) {
+            wsConnect();
+            if (!P_wsReady || !P_ws || P_ws.readyState !== WebSocket.OPEN) {
+                console.warn("[WS] not ready to send", obj);
+                return false;
+            }
+            P_ws.send(JSON.stringify(obj));
+            return true;
+        }
+
+        // connect early
+        $(function() {
+            wsConnect();
+        });
+    </script>
+
+    <?php include '../script/get_bmi_result.php';
+    ?>
+    <?php include '../script/modal_print_bmi.php';
+    ?>
 
     <script>
         // Prevent double-saving (Yes/No/Countdown can all fire)
         let hasSavedBmi = false;
 
         function getDashboardBmiData() {
-            // Height / Weight (you currently store them in hidden <h1 id="height">166</h1>)
-            $('#height').text(height_cm.toFixed(1) + ' cm');
-            $('#weight').text(weight_kg.toFixed(1) + ' kg');
+            const saved = JSON.parse(sessionStorage.getItem("bmi_last_result") || "null");
+            if (!saved || saved.ok !== true || saved.cmd !== "result") return null;
 
-            // BMI display
-            const bmi = ($('.bmi-value').first().text() || '').trim();
-
-            // Classification display
-            const classification = ($('.bmi-category').first().text() || '').trim();
+            const classification = ($('.bmi-category').first().text() || '').trim(); // from JSON match.name
 
             return {
-                height,
-                weight,
-                bmi,
-                classification
+                height: Number(saved.height_cm).toFixed(1),
+                weight: Number(saved.weight_kg).toFixed(1),
+                bmi: Number(saved.bmi).toFixed(1),
+                classification: classification
             };
         }
+
 
         function saveBmiRecord(printedFlag) {
             if (hasSavedBmi) return $.Deferred().resolve({
@@ -148,13 +204,10 @@ if (!isset($_SESSION['user_id'])) {
 
             const data = getDashboardBmiData();
 
-            // Optional: guard if still "--"
-            if (!data.height || !data.weight || !data.bmi || !data.classification ||
-                data.bmi === '--' || data.classification === '--') {
-                console.warn('BMI data not ready yet:', data);
+            if (!data) {
+                console.warn('BMI data not ready');
                 return $.Deferred().reject({
-                    ok: false,
-                    error: 'BMI data not ready'
+                    ok: false
                 }).promise();
             }
 
@@ -180,10 +233,30 @@ if (!isset($_SESSION['user_id'])) {
 
         // Hook into your existing modal buttons:
         function confirmPrinting() {
-            // Save first, then print
-            saveBmiRecord(true).always(function() {
-                // your existing print logic here
-                // window.print(); OR whatever you already do
+            saveBmiRecord(true).done(function(saveResp) {
+                const data = getDashboardBmiData();
+                if (!data) {
+                    closePrintModal();
+                    return;
+                }
+
+                // Send print job to Raspberry Pi printer service
+                const ok = wsSend({
+                    cmd: "print_bmi",
+                    user_id: (JSON.parse(sessionStorage.getItem("bmi_last_result") || "{}").user_id || ""),
+                    height_cm: Number(data.height),
+                    weight_kg: Number(data.weight),
+                    bmi: Number(data.bmi),
+                    classification: data.classification,
+                    ts: Date.now()
+                });
+
+                if (!ok) console.warn("Print command not sent (WS not connected)");
+
+                closePrintModal();
+                window.location.href = '../api/logout.php';
+            }).fail(function() {
+                // if save failed, allow retry
                 closePrintModal();
             });
         }
@@ -191,6 +264,7 @@ if (!isset($_SESSION['user_id'])) {
         function skipPrinting() {
             saveBmiRecord(false).always(function() {
                 closePrintModal();
+                window.location.href = '../api/logout.php';
                 // optional redirect or UI update
             });
         }
@@ -214,6 +288,7 @@ if (!isset($_SESSION['user_id'])) {
                     // Auto-save as "skipped/auto"
                     saveBmiRecord(false).always(function() {
                         closePrintModal();
+                        window.location.href = '../api/logout.php';
                     });
                 }
             }, 1000);

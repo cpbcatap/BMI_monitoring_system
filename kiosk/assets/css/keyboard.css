@@ -1,0 +1,101 @@
+/* keyboard.css */
+
+/* Optional: keyboard-specific vars (so you can tweak without touching global theme) */
+:root{
+  --kb-bg: #525252;
+  --kb-key-bg: rgba(255, 255, 255, 0.14);
+  --kb-key-text: #ffffff;
+  --kb-key-border: rgba(255,255,255,0.18);
+  --kb-key-pressed-bg: rgba(255, 255, 255, 0.10);
+  --kb-key-hover-bg: var(--button-hover-bg);
+  --kb-key-hover-text: var(--button-hover-text);
+  --kb-shadow: 0 10px 30px rgba(2, 6, 23, 0.20);
+}
+
+.keyboard {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 0;
+  background: var(--kb-bg);
+  box-shadow: var(--kb-shadow);
+  border-top: 1px solid rgba(255,255,255,0.12);
+  transition: bottom 0.4s;
+  z-index: 9999;
+}
+
+.keyboard--hidden {
+  bottom: -100%;
+}
+
+.keyboard__keys {
+  text-align: center;
+}
+
+.keyboard__key {
+  height: 45px;
+  width: 6%;
+  max-width: 90px;
+  margin: 3px;
+  border-radius: 10px;
+  border: 1px solid var(--kb-key-border);
+
+  background: var(--kb-key-bg);
+  color: var(--kb-key-text);
+
+  font-size: 1.05rem;
+  outline: none;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: top;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  transition: background .15s ease, color .15s ease, transform .05s ease;
+}
+
+/* Hover (mouse) */
+.keyboard__key:hover {
+  background: var(--kb-key-hover-bg);
+  color: var(--kb-key-hover-text);
+}
+
+/* Touch press */
+.keyboard__key:active {
+  background: var(--kb-key-pressed-bg);
+  transform: translateY(1px);
+}
+
+.keyboard__key--wide { width: 15%; }
+.keyboard__key--extra--wide { width: 36%; max-width: 500px; }
+
+/* “Dark” keys like Done */
+.keyboard__key--dark {
+  background: rgba(0,0,0,0.18);
+}
+
+/* Caps LED dot */
+.keyboard__key--activatable::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  background: rgba(0,0,0,0.35);
+  border-radius: 50%;
+}
+
+.keyboard__key--active::after {
+  background: #22c55e; /* you can also make this a variable */
+}
+
+/* If your Iconify CSS icons use currentColor, this keeps them aligned */
+.keyboard__key > span {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}

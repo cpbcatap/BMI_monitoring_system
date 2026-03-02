@@ -6,7 +6,7 @@
 }
 
 .cancel-link a {
-  font-size: 16px;
+  font-size: 22px;
   color: var(--primary-color);
   text-decoration: none;
   transition: 0.2s ease;
@@ -24,7 +24,7 @@
   color: white;
   border: none;
   border-radius: var(--radius-sm);
-  font-size: 15px;
+  font-size: 22px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s ease;

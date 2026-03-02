@@ -1,50 +1,27 @@
 <script>
-  let printTimer = null;
-  let printCountdownTimer = null;
-  let countdownValue = 10;
+  let P_countdownTimer = null;
 
   function saveData() {
-    console.log("Save button clicked1");
-
-    // TODO: if you already have an AJAX save, call it first,
-    // then on success => openPrintModal();
-    // For now, open modal immediately:
-    openPrintModal();
+    // just open modal; actual save happens on Yes/No/Timeout
+    openPrintModal(10);
   }
 
-  function openPrintModal() {
-    console.log("Opening print modal");
+  function openPrintModal(seconds = 10) {
     const modal = document.getElementById('printModal');
     modal.classList.add('show');
 
-    // reset countdown
-    countdownValue = 10;
-    document.getElementById('printCountdown').textContent = countdownValue;
+    startPrintCountdown(seconds);
 
-    // clear any existing timers
-    clearTimers();
-
-    // countdown display
-    printCountdownTimer = setInterval(() => {
-      countdownValue--;
-      if (countdownValue <= 0) {
-        document.getElementById('printCountdown').textContent = 0;
-        clearTimers();
-        // auto-print when time runs out (like your design implies)
-        confirmPrinting();
-        return;
-      }
-      document.getElementById('printCountdown').textContent = countdownValue;
-    }, 1000);
-
-    // allow ESC to close
     document.addEventListener('keydown', escToClose);
   }
 
   function closePrintModal() {
     const modal = document.getElementById('printModal');
     modal.classList.remove('show');
-    clearTimers();
+
+    clearInterval(P_countdownTimer);
+    P_countdownTimer = null;
+
     document.removeEventListener('keydown', escToClose);
   }
 
@@ -52,46 +29,38 @@
     if (e.key === 'Escape') closePrintModal();
   }
 
-  function clearTimers() {
-    if (printCountdownTimer) {
-      clearInterval(printCountdownTimer);
-      printCountdownTimer = null;
-    }
-    if (printTimer) {
-      clearTimeout(printTimer);
-      printTimer = null;
-    }
+  function startPrintCountdown(seconds) {
+    let s = seconds;
+    document.getElementById('printCountdown').textContent = s;
+
+    clearInterval(P_countdownTimer);
+    P_countdownTimer = setInterval(() => {
+      s--;
+      document.getElementById('printCountdown').textContent = Math.max(0, s);
+
+      if (s <= 0) {
+        clearInterval(P_countdownTimer);
+        P_countdownTimer = null;
+
+        // Timeout behavior=treat as "skip printing"
+        if (typeof window.skipPrinting === "function") {
+          window.skipPrinting();
+        } else {
+          closePrintModal();
+        }
+      }
+    }, 1000);
   }
 
-  function skipPrinting() {
-    console.log("User skipped printing");
-    closePrintModal();
-
-    // optional redirect after skipping
-    // window.location.href = "record.php";
-  }
-
-  function confirmPrinting() {
-    console.log("User confirmed printing");
-    closePrintModal();
-
-    // TODO: call your printing endpoint or open print page
-    // Example:
-    // window.open("print_receipt.php?record_id=123", "_blank");
-    // OR:
-    // window.location.href = "print.php";
-  }
-
-  // click outside modal to close (optional)
+  // click outside to close (optional)
   document.addEventListener('click', function(e) {
     const modal = document.getElementById('printModal');
     if (!modal.classList.contains('show')) return;
-
     if (e.target === modal) closePrintModal();
   });
 
+  // navigation (UI)
   function viewRecords() {
-    console.log("View Records button clicked");
     window.location.href = "record.php";
   }
 </script>
